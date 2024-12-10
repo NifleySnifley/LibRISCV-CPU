@@ -1,0 +1,7 @@
+OBJCOPY=../tools/asm2bin.py
+LIBDIR=../library
+
+LIB_SOURCES=$(LIBDIR)/crt0_minimal.S $(LIBDIR)/soc_core.c $(LIBDIR)/soc_io.c
+COMPILE=riscv32-unknown-elf-gcc -I$(LIBDIR) -g -march=rv32im -mabi=ilp32 -Wall -nostartfiles -ffunction-sections -fdata-sections -mstrict-align -Wl,--gc-sections -ffp-contract=off
+# COMPILE_FULL=$(COMPILE) -lm -lc -lgcc $(LIB_SOURCES)
+COMPILE_FULL=$(COMPILE) -nostdlib -Os -T$(LIBDIR)/map_minimal.ld $(LIB_SOURCES)
